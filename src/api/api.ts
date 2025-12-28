@@ -783,8 +783,17 @@ export class OpenSeaAPI {
       })}`,
     );
 
+    const start = Date.now();
     const response = await req.send();
+    const elapsed = Date.now() - start;
+    this.logger(
+      `Received response: ${url} (status: ${response.statusCode}, time: ${elapsed}ms)`,
+    );
+
     if (!response.ok()) {
+      this.logger(
+        `Request failed: ${response.statusCode} - ${JSON.stringify(response.bodyJson)}`,
+      );
       // Handle rate limit errors (429 Too Many Requests and 599 custom rate limit)
       if (response.statusCode === 599 || response.statusCode === 429) {
         throw this._createRateLimitError(response);

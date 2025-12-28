@@ -73,6 +73,7 @@ export async function executeWithRateLimit<T>(
         rateLimitError.retryAfter !== undefined;
 
       if (!isRateLimitError || attempt === maxRetries) {
+        logger(`Throwing error (attempt ${attempt + 1}): ${lastError.message}`);
         // Not a rate limit error or out of retries, throw the error
         throw error;
       }

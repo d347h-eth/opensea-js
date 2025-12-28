@@ -76,7 +76,7 @@ export class OpenSeaSDK {
     // API config
     apiConfig.chain ??= Chain.Mainnet;
     this.chain = apiConfig.chain;
-    this.api = new OpenSeaAPI(apiConfig);
+    this.api = new OpenSeaAPI(apiConfig, logger);
 
     this.provider = ((signerOrProvider as Signer).provider ??
       signerOrProvider) as JsonRpcProvider;
